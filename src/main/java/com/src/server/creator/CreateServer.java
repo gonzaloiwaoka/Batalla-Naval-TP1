@@ -26,8 +26,7 @@ public class CreateServer {
         server.createContext("/sendObjectToClient", new SendObjectToClient(clientManager));
         server.createContext("/inviteClient", new InviteClientHandler(host, noHost));
         server.createContext("/joinGame", new JoinGameHandler(noHost));
-        //server.createContext("/joinGame", new JoinGameHandler());
-        //server.createContext("/sendOk", new sendOkHandler());
+        server.createContext("/sendString", new SendStringHandler());
 
         String ipPort = typeUserIp.getIp() + ":" + typeUserIp.getPort();
 

@@ -14,8 +14,8 @@ public class SetUperData {
 
     private ErrorFunctions errors;
 
-    public SetUperData() {
-        this.errors = new ErrorFunctions();
+    public SetUperData(ErrorFunctions errors) {
+        this.errors = errors;
     }
 
     public void decideFirst(Player allyPlayer, Player enemyPlayer) {

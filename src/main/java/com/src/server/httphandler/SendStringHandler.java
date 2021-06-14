@@ -1,35 +1,25 @@
 package com.src.server.httphandler;
 
-import com.src.entity.Player;
+import com.src.InformationObtainer.InformationProcessor;
 import com.src.server.gson.Mapper;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 
 import java.io.IOException;
 import java.io.OutputStream;
-import java.net.InetAddress;
 
-public class InviteClientHandler implements HttpHandler {
-
-    private Player host;
-    private Player noHost;
-    public InviteClientHandler(Player host, Player noHost) {
-        this.host = host;
-        this.noHost = noHost;
-    }
+public class SendStringHandler implements HttpHandler {
 
     @Override
     public void handle(HttpExchange exchange) throws IOException {
         try {
-            String string = Mapper.fromJson(exchange.getRequestBody(), String.class);
+            String message = Mapper.fromJson(exchange.getRequestBody(), String.class);
+            InformationProcessor.showStringAndLine(message);
+            Thread.sleep(2000);
+            exchange.sendResponseHeaders(200,0);
 
-            System.out.println(string);
-
-            System.out.println(noHost.getIpPort());
-
-            exchange.sendResponseHeaders(200, noHost.getIpPort().length());
             OutputStream os = exchange.getResponseBody();
-            os.write(noHost.getIpPort().getBytes());
+            os.write(0);
 
             os.flush();
             os.close();
@@ -38,6 +28,7 @@ public class InviteClientHandler implements HttpHandler {
         } catch (Exception ex) {
             System.out.println(ex.getMessage());
         }
+
 
     }
 }

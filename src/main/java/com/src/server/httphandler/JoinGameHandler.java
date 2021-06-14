@@ -20,17 +20,24 @@ public class JoinGameHandler implements HttpHandler {
 
     @Override
     public void handle(HttpExchange exchange) throws IOException {
-        String ipPort = Mapper.fromJson(exchange.getRequestBody(), String.class);
-        System.out.println(ipPort);
+        try {
+            String ipPort = Mapper.fromJson(exchange.getRequestBody(), String.class);
+            System.out.println(ipPort);
 
-        noHost.setIpPort(ipPort);
-        InformationProcessor.showStringAndLine("Alguien se te esta uniendo...");
-        String ok = "OK";
-        exchange.sendResponseHeaders(200, ok.length());
-        OutputStream os = exchange.getResponseBody();
-        os.write(ok.getBytes());
+            noHost.setIpPort(ipPort);
+            InformationProcessor.showStringAndLine("Alguien se te esta uniendo...");
+            String ok = "OK";
+            exchange.sendResponseHeaders(200, ok.length());
+            OutputStream os = exchange.getResponseBody();
+            os.write(ok.getBytes());
 
-        os.flush();
-        os.close();
+            os.flush();
+            os.close();
+        } catch (IOException ioException) {
+            System.out.println(ioException.getMessage());
+        } catch (Exception exception) {
+            System.out.println(exception.getMessage());
+        }
+
     }
 }

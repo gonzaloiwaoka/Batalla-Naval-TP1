@@ -20,10 +20,9 @@ public class ServerManager {
 
     private Connect connect;
 
-    public ServerManager () {
-        this.connect = new Connect();
+    public ServerManager(Connect connect) {
+        this.connect = connect;
     }
-
 
     public Position obtainPosition(Player player) throws IOException {
         String stringPosition = connect.sendPost(player.getIpPort(), GET_POSITION_ENDPOINT, "Dame una coordenadas, para tu ninja!");

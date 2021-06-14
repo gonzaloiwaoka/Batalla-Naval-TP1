@@ -32,7 +32,6 @@ public class DataChecker {
     }
 
     private void ninjasAlive(Player player) {
-        System.out.println(player.getNinjas().size());
         int i = player.getNinjas().size() - 1;
         while (i >= 0) {
             if (player.getNinjas().get(i).getHp() <= 0) {

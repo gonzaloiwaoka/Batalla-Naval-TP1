@@ -17,11 +17,10 @@ public class GameLoader {
     private static final int HOST_PORT = 2727;
     private static final int NO_HOST_PORT = 8000;
 
-    public GameLoader(ScreenLoad screenLoad, ScreenMain screenMain, ScreenCreateGame screenCreateGame, ScreenJoinGame screenJoinGame) {
+    public GameLoader(ScreenLoad screenLoad, ScreenMain screenMain, ScreenCreateGame screenCreateGame) {
         this.screenLoad = screenLoad;
         this.screenMain = screenMain;
         this.screenCreateGame = screenCreateGame;
-        this.screenJoinGame = screenJoinGame;
     }
 
     /**

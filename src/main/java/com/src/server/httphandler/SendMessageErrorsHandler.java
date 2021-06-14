@@ -12,20 +12,27 @@ import java.util.List;
 public class SendMessageErrorsHandler implements HttpHandler {
     @Override
     public void handle(HttpExchange exchange) throws IOException {
-        List<Error> errors = Mapper.fromJsonListErrors(exchange.getRequestBody());
+        try {
+            List<Error> errors = Mapper.fromJsonListErrors(exchange.getRequestBody());
 
-        for (Error element : errors) {
-            System.out.println(element.getMessage());
+            for (Error element : errors) {
+                System.out.println(element.getMessage());
+            }
+
+            System.out.println();
+            System.out.println();
+
+            exchange.sendResponseHeaders(200,0);
+            OutputStream oS = exchange.getResponseBody();
+            oS.write(0);
+
+            oS.flush();
+            oS.close();
+        } catch (IOException ex) {
+            System.out.println(ex.getMessage());
+        } catch (Exception ex) {
+            System.out.println(ex.getMessage());
         }
 
-        System.out.println();
-        System.out.println();
-
-        exchange.sendResponseHeaders(200,0);
-        OutputStream oS = exchange.getResponseBody();
-        oS.write(0);
-
-        oS.flush();
-        oS.close();
     }
 }

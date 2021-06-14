@@ -22,10 +22,10 @@ public class ActionValidator {
         return moveValidator;
     }
 
-    public ActionValidator(){
-        this.attackValidator = new AttackValidator();
-        this.moveValidator = new MoveValidator();
-        this.errorFunctions = new ErrorFunctions();
+    public ActionValidator(AttackValidator attackValidator, MoveValidator moveValidator, ErrorFunctions errorFunctions) {
+        this.attackValidator = attackValidator;
+        this.moveValidator = moveValidator;
+        this.errorFunctions = errorFunctions;
     }
 
     public boolean attack(Tile enemyTile) {

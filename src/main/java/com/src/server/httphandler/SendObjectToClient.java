@@ -21,36 +21,44 @@ public class SendObjectToClient implements HttpHandler {
 
     @Override
     public void handle(HttpExchange exchange) throws IOException {
-        DataClient dataClient = Mapper.fromJson(exchange.getRequestBody(), DataClient.class);
-
-        switch (dataClient.getActionType()) {
-            case 0:
-                clientManager.modifyNinja(dataClient);
-                break;
-            case 1:
-                clientManager.attackTerrain(dataClient);
-                break;
-            case 2:
-                clientManager.moveNinja(dataClient);
-                break;
-            case 3:
-                clientManager.attackedTerrain(dataClient);
-                break;
-        }
-        if (dataClient.getActionType() != 3) {
-            clientManager.ShowGrid();
-        }
-
-        if (dataClient.getActionType() == 100) {
+        try {
             ClearConsole.clearScreen();
-            System.out.println("Espera mientras el otro juega.");
+            DataClient dataClient = Mapper.fromJson(exchange.getRequestBody(), DataClient.class);
+
+            switch (dataClient.getActionType()) {
+                case 0:
+                    clientManager.modifyNinja(dataClient);
+                    break;
+                case 1:
+                    clientManager.attackTerrain(dataClient);
+                    break;
+                case 2:
+                    clientManager.moveNinja(dataClient);
+                    break;
+                case 3:
+                    clientManager.attackedTerrain(dataClient);
+                    break;
+            }
+            if (dataClient.getActionType() != 3) {
+                clientManager.ShowGrid();
+            }
+
+            if (dataClient.getActionType() == 100) {
+                ClearConsole.clearScreen();
+                System.out.println("Espera mientras el otro juega.");
+            }
+
+            exchange.sendResponseHeaders(200,0);
+            OutputStream os = exchange.getResponseBody();
+            os.write(0);
+
+            os.flush();
+            os.close();
+        }catch (IOException ex) {
+            System.out.println(ex.getMessage());
+        } catch (Exception ex) {
+            System.out.println(ex.getMessage());
         }
 
-        exchange.sendResponseHeaders(200,0);
-        OutputStream os = exchange.getResponseBody();
-        os.write(0);
-
-        os.flush();
-        os.close();
     }
 }

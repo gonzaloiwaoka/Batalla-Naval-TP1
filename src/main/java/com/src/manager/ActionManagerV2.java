@@ -10,6 +10,7 @@ import com.src.validator.AttackValidator;
 import com.src.validator.MoveValidator;
 
 import javax.swing.*;
+import java.io.IOException;
 import java.util.List;
 
 public class ActionManagerV2 {
