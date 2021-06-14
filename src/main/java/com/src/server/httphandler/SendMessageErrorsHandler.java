@@ -1,6 +1,5 @@
 package com.src.server.httphandler;
 
-import ConsoleCleaner.ClearConsole;
 import com.src.errorManagement.Error;
 import com.src.server.gson.Mapper;
 import com.sun.net.httpserver.HttpExchange;

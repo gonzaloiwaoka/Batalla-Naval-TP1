@@ -1,11 +1,9 @@
 package com.src.InformationObtainer;
 
-import ConsoleCleaner.ClearConsole;
+import com.src.ConsoleCleaner.ClearConsole;
 import com.src.entity.PlayerAction;
 import com.src.entity.Position;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Scanner;
 
 public class InfoObtainer {

@@ -1,4 +1,4 @@
-package ConsoleCleaner;
+package com.src.ConsoleCleaner;
 
 import java.io.IOException;
 

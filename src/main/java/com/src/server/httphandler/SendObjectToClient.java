@@ -1,6 +1,6 @@
 package com.src.server.httphandler;
 
-import ConsoleCleaner.ClearConsole;
+import com.src.ConsoleCleaner.ClearConsole;
 import com.src.entity.DataClient;
 import com.src.manager.ClientManager;
 import com.src.server.gson.Mapper;

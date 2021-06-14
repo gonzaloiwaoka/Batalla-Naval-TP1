@@ -1,6 +1,6 @@
 package com.src.server.httphandler;
 
-import ConsoleCleaner.ClearConsole;
+import com.src.ConsoleCleaner.ClearConsole;
 import com.src.InformationObtainer.InfoObtainer;
 import com.src.entity.PlayerAction;
 import com.src.server.gson.Mapper;

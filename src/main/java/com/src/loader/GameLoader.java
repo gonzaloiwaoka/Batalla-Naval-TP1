@@ -1,12 +1,10 @@
 package com.src.loader;
 
-import ConsoleCleaner.ClearConsole;
+import com.src.ConsoleCleaner.ClearConsole;
 import com.src.InformationObtainer.InfoObtainer;
 import com.src.entity.TypeUserIp;
 import com.src.screens.*;
 
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Scanner;
 
 public class GameLoader {
