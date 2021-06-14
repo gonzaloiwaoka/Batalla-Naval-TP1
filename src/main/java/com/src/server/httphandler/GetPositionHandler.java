@@ -1,7 +1,7 @@
 package com.src.server.httphandler;
 
 import com.src.ConsoleCleaner.ClearConsole;
-import com.src.InformationObtainer.InfoObtainer;
+import com.src.InformationObtainer.InformationProcessor;
 import com.src.entity.Position;
 import com.src.server.gson.Mapper;
 import com.sun.net.httpserver.HttpExchange;
@@ -18,7 +18,7 @@ public class GetPositionHandler implements HttpHandler {
             String message = Mapper.fromJson(exchange.getRequestBody(), String.class);
             System.out.println(message);
 
-            Position position = InfoObtainer.getRowColumn();
+            Position position = InformationProcessor.getRowColumn();
 
             ClearConsole.clearScreen();
 

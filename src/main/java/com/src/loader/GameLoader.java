@@ -1,7 +1,7 @@
 package com.src.loader;
 
 import com.src.ConsoleCleaner.ClearConsole;
-import com.src.InformationObtainer.InfoObtainer;
+import com.src.InformationObtainer.InformationProcessor;
 import com.src.entity.TypeUserIp;
 import com.src.screens.*;
 
@@ -13,6 +13,9 @@ public class GameLoader {
     private ScreenMain screenMain;
     private ScreenCreateGame screenCreateGame;
     private ScreenJoinGame screenJoinGame;
+
+    private static final int HOST_PORT = 2727;
+    private static final int NO_HOST_PORT = 8000;
 
     public GameLoader(ScreenLoad screenLoad, ScreenMain screenMain, ScreenCreateGame screenCreateGame, ScreenJoinGame screenJoinGame) {
         this.screenLoad = screenLoad;
@@ -82,31 +85,25 @@ public class GameLoader {
         screenCreateGame.showMessage();
         TypeUserIp typeUserIp = new TypeUserIp();
 
-        String input = InfoObtainer.getString();
+        String input = InformationProcessor.getString();
 
         if (input != "S") {
-            System.out.print("Ingrese el puerto: ");
-            typeUserIp.setPort(InfoObtainer.getInt());
+            typeUserIp.setPort(HOST_PORT);
             typeUserIp.setIp(input);
             typeUserIp.setTypeUser(true);
         }
-
-
-
-
 
         return typeUserIp;
     }
 
     public TypeUserIp joinGame() {
-        screenJoinGame.showMessage();
+        screenCreateGame.showMessage();
         TypeUserIp typeUserIp = new TypeUserIp();
 
-        String input = InfoObtainer.getString();
+        String input = InformationProcessor.getString();
 
         if (input != "S") {
-            System.out.print("Ingrese el puerto: ");
-            typeUserIp.setPort(InfoObtainer.getInt());
+            typeUserIp.setPort(NO_HOST_PORT);
             typeUserIp.setIp(input);
             typeUserIp.setTypeUser(true);
         }

@@ -6,7 +6,7 @@ import com.src.entity.Position;
 
 import java.util.Scanner;
 
-public class InfoObtainer {
+public class InformationProcessor {
 
     private static final int MIN_ROW_COLUMN = 1;
     private static final int MAX_ROW_COLUMN = 5;
@@ -92,5 +92,13 @@ public class InfoObtainer {
 
         ClearConsole.clearScreen();
         return value;
+    }
+
+    public static void showStringAndLine(String string) {
+        System.out.println(string);
+    }
+
+    public static void showString(String string) {
+        System.out.println(string);
     }
 }

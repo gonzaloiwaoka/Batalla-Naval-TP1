@@ -1,7 +1,7 @@
 package com.src.server.httphandler;
 
 import com.src.ConsoleCleaner.ClearConsole;
-import com.src.InformationObtainer.InfoObtainer;
+import com.src.InformationObtainer.InformationProcessor;
 import com.src.entity.PlayerAction;
 import com.src.server.gson.Mapper;
 import com.sun.net.httpserver.HttpExchange;
@@ -18,7 +18,7 @@ public class GetActionHandler implements HttpHandler {
             String string = Mapper.fromJson(exchange.getRequestBody(), String.class);
             System.out.println(string);
 
-            PlayerAction playerAction = InfoObtainer.getActionRowColumn();
+            PlayerAction playerAction = InformationProcessor.getActionRowColumn();
             String stringPlayerAction = Mapper.toJson(playerAction);
 
             ClearConsole.clearScreen();

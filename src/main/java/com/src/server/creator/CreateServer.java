@@ -1,6 +1,7 @@
 package com.src.server.creator;
 
 
+import com.src.entity.Player;
 import com.src.entity.TypeUserIp;
 
 import com.src.manager.ClientManager;
@@ -13,7 +14,7 @@ import java.net.InetSocketAddress;
 
 public class CreateServer {
 
-    public static String createServer(TypeUserIp typeUserIp, ClientManager clientManager) throws IOException {
+    public static String createServer(TypeUserIp typeUserIp, ClientManager clientManager, Player host, Player noHost) throws IOException {
         System.out.println(InetAddress.getLocalHost());
         InetAddress localHost = InetAddress.getByName(typeUserIp.getIp());
         InetSocketAddress sockAddr = new InetSocketAddress(localHost, typeUserIp.getPort());
@@ -23,6 +24,8 @@ public class CreateServer {
         server.createContext("/getPosition", new GetPositionHandler());
         server.createContext("/sendMessageErrors", new SendMessageErrorsHandler());
         server.createContext("/sendObjectToClient", new SendObjectToClient(clientManager));
+        server.createContext("/inviteClient", new InviteClientHandler(host, noHost));
+        server.createContext("/joinGame", new JoinGameHandler(noHost));
         //server.createContext("/joinGame", new JoinGameHandler());
         //server.createContext("/sendOk", new sendOkHandler());
 

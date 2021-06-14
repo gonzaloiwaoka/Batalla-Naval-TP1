@@ -15,6 +15,9 @@ public class ServerManager {
     private static final String SEND_ERRORS_ENDPOINT = "/sendMessageErrors";
     private static final String SEND_OBJECT_ENDPOINT = "/sendObjectToClient";
     private static final String SEND_STRING_ENDPOINT = "/sendString";
+    private static final String OBTAIN_IP_PORT_ENDPOINT = "/inviteClient";
+    private static final String JOIN_GAME_ENDPOINT = "/joinGame";
+
     private Connect connect;
 
     public ServerManager () {
@@ -51,4 +54,14 @@ public class ServerManager {
         connect.sendPost(player.getIpPort(), SEND_STRING_ENDPOINT, string);
     }
 
+    public String invitePlayer(String ipPort) throws IOException {
+        String response = connect.sendPost(ipPort, OBTAIN_IP_PORT_ENDPOINT, "Te acaban de invitar, mandando tu ip al host...");
+        return response;
+    }
+
+    public String joinPlayer(String ipPort, String ipPortNoHost) throws IOException {
+        String response = connect.sendPost(ipPort, JOIN_GAME_ENDPOINT, ipPortNoHost);
+        return response;
+    }
 }
+
