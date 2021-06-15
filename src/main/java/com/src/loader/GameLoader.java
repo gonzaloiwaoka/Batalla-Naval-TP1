@@ -27,7 +27,7 @@ public class GameLoader {
      * esta flojo de papeles, cabe la posibilidad que ponga un try and catch para atrapar errores
      * @return
      */
-    public TypeUserIp loadGame() {
+    public TypeUserIp loadGame() throws InterruptedException {
         boolean exit = false;
         Scanner scanner = new Scanner(System.in);
 
@@ -80,7 +80,7 @@ public class GameLoader {
         return typeUserIp;
     }
 
-    private TypeUserIp createGame() {
+    private TypeUserIp createGame() throws InterruptedException {
         screenCreateGame.showMessage();
         TypeUserIp typeUserIp = new TypeUserIp();
 
