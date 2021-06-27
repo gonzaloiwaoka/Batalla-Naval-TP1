@@ -73,4 +73,7 @@ public class ActionValidator {
         return errorFunctions;
     }
 
+    public AttackValidator getAttackValidator() {
+        return attackValidator;
+    }
 }

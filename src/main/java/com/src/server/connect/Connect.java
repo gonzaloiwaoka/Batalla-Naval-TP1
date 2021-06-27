@@ -8,7 +8,15 @@ import java.net.URL;
 
 public class Connect {
 
-
+    /**
+     * Manda un Post de un objeto a la direccion ip y el end point indicado
+     * Tambien transforma el objeto a json
+     * @param ipPort
+     * @param endPoint
+     * @param object
+     * @return
+     * @throws IOException
+     */
     public String sendPost(String ipPort, String endPoint, Object object) throws IOException {
         URL url = new URL("http://" + ipPort + endPoint);
 

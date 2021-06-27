@@ -13,37 +13,51 @@ public class InformationProcessor {
     private static final int MIN_ACTION = 1;
     private static final int MAX_ACTION = 2;
 
+    private static final String CHARACTER_NO_VALID = "El caracter ingrasado no es valido.";
     private static final String ROW_NO_VALID = "La fila tiene que estar entre las posiciones del " + MIN_ROW_COLUMN + " al " + MAX_ROW_COLUMN;
     private static final String COlUMN_NO_VALID = "La columna tiene que estar entre las posiciones del " + MIN_ROW_COLUMN + " al " + MAX_ROW_COLUMN;
     private static final String ACTION_NO_VALID = "La accion ingresada no es valida tiene que ser: " + MIN_ACTION + " Ataque | " + MAX_ACTION + " Movimiento.";
 
     /**
-     * Donde Values.get(0) es la accion | values.get(1) es la fila | values.get(2) es la
-     * columna
+     * Obtiene una fila, y una columna.
      */
     public static Position getRowColumn() {
         Position position = new Position();
         Scanner sc = new Scanner(System.in);
-        int value;
+        String string;
+        Integer value = null;
 
         do {
-            System.out.print("Elija la fila: ");
-            value = sc.nextInt();
-            if (value < MIN_ROW_COLUMN || value > MAX_ROW_COLUMN) {
-                System.out.println(ROW_NO_VALID);
+            System.out.print("Elija la fila (numero del 1 al 5) : ");
+            string = sc.nextLine();
+            if (isNumeric(string)) {
+                value = Integer.valueOf(string);
+                if (value < MIN_ROW_COLUMN || value > MAX_ROW_COLUMN) {
+                    System.out.println(ROW_NO_VALID);
+                }
+            } else {
+                System.out.println(CHARACTER_NO_VALID);
             }
-        } while (value < MIN_ROW_COLUMN || value > MAX_ROW_COLUMN);
+
+        } while (!isNumeric(string) || value < MIN_ROW_COLUMN || value > MAX_ROW_COLUMN);
 
         position.setRow(value-1);
 
         do {
-            System.out.print("Elija la columa: ");
-            value = sc.nextInt();
+            System.out.print("Elija la columa (numero del 1 al 5) : ");
+            string = sc.nextLine();
 
-            if (value < MIN_ROW_COLUMN || value > MAX_ROW_COLUMN) {
-                System.out.println(COlUMN_NO_VALID);
+            if (isNumeric(string)) {
+                value = Integer.valueOf(string);
+                if (value < MIN_ROW_COLUMN || value > MAX_ROW_COLUMN) {
+                    System.out.println(COlUMN_NO_VALID);
+                }
+            } else {
+                System.out.println(CHARACTER_NO_VALID);
             }
-        } while (value < MIN_ROW_COLUMN || value > MAX_ROW_COLUMN);
+
+
+        } while (!isNumeric(string) || (value < MIN_ROW_COLUMN || value > MAX_ROW_COLUMN));
 
         position.setColumn(value-1);
 
@@ -53,18 +67,24 @@ public class InformationProcessor {
     public static PlayerAction getActionRowColumn() {
         PlayerAction playerAction = new PlayerAction();
         Scanner sc = new Scanner(System.in);
-
-        int value;
+        String string;
+        Integer value = null;
 
         do {
             System.out.print("Ingrese la accion (1: ataque | 2: movimiento): ");
-            value = sc.nextInt();
+            string = sc.nextLine();
 
-
-            if (value < MIN_ACTION || value > MAX_ACTION) {
-                System.out.println(ACTION_NO_VALID);
+            if (isNumeric(string)) {
+                value = Integer.valueOf(string);
+                if (value < MIN_ACTION || value > MAX_ACTION) {
+                    System.out.println(ACTION_NO_VALID);
+                }
+            } else {
+                System.out.println(CHARACTER_NO_VALID);
             }
-        } while (value < MIN_ACTION || value > MAX_ACTION);
+
+
+        } while (!isNumeric (string) || value < MIN_ACTION || value > MAX_ACTION);
 
         playerAction.setAction(value);
 
@@ -100,5 +120,9 @@ public class InformationProcessor {
 
     public static void showString(String string) {
         System.out.println(string);
+    }
+
+    private static boolean isNumeric(String str){
+        return str != null && str.matches("[0-9.]+");
     }
 }

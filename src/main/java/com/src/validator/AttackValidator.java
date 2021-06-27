@@ -5,14 +5,22 @@ import com.src.enumarate.TerrainType;
 import com.src.errorManagement.ErrorFunctions;
 
 public class AttackValidator {
-
+    private boolean attackedNinja;
     private ErrorFunctions errorFunctions;
     public AttackValidator() {
         this.errorFunctions = new ErrorFunctions();
     }
 
+    /**
+     * Verifica si en la enemyTile, es valida:
+     * Si no esta destruida
+     * Si hay un ninja
+     * @param enemyTile
+     * @return
+     */
     public boolean attackTerrain(Tile enemyTile) {
         boolean success = false;
+        attackedNinja = false;
         errorFunctions.removeErrors();
 
         if (enemyTile.getTerrain() == TerrainType.Walkable) {
@@ -27,10 +35,14 @@ public class AttackValidator {
                 enemyTile.setTerrain(TerrainType.Destroyed);
                 enemyTile.setNinja(null);
             }
+            attackedNinja = true;
             success = true;
         }
 
             return success;
     }
 
+    public boolean isAttackedNinja() {
+        return attackedNinja;
+    }
 }

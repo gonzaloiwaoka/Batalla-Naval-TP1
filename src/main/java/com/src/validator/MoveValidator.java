@@ -29,9 +29,6 @@ public class MoveValidator {
         boolean success = false;
         Position posNinja = searchNinja(gridMapper, ninja);
 
-        /* Reviso si la posicion de la columna es distinta a -1, dado que si
-        * es -1 significa que no encontro al ninjaz|
-        * */
 
         if (posNinja.getColumn() != -1) {
             if ((posNinja.getColumn() - posMove.getColumn() >= -1 && posNinja.getColumn() - posMove.getColumn() <= 1)

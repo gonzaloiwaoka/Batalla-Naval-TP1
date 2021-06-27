@@ -5,12 +5,11 @@ import com.src.entity.*;
 import com.src.enumarate.TerrainType;
 import com.src.errorManagement.ErrorFunctions;
 import com.src.setuper.SetUperData;
-import com.src.validator.ActionValidator;
 
 import javax.xml.crypto.Data;
 import java.io.IOException;
 
-public class GameManagerV2 {
+public class GameManager {
     private static final int GENERAL_HP = 2;
     private static final int ATTACK = 1;
     private static final int MOVE = 2;
@@ -24,11 +23,11 @@ public class GameManagerV2 {
     private Player host;
     private Player noHost;
     private ServerManager serverManager;
-    private ActionManagerV2 actionManager;
+    private ActionManager actionManager;
     private ErrorFunctions errorFunctions;
     private DataChecker dataChecker;
 
-    public GameManagerV2(SetUperData setUperData, Player host, Player noHost, ServerManager serverManager, ActionManagerV2 actionManager, ErrorFunctions errorFunctions, DataChecker dataChecker) {
+    public GameManager(SetUperData setUperData, Player host, Player noHost, ServerManager serverManager, ActionManager actionManager, ErrorFunctions errorFunctions, DataChecker dataChecker) {
         this.setUperData = setUperData;
         this.host = host;
         this.noHost = noHost;
@@ -38,6 +37,13 @@ public class GameManagerV2 {
         this.dataChecker = dataChecker;
     }
 
+    /**
+     * Hace un set-up del game antes de empezar:
+     * Decide quien va primero
+     * Añade ninjas al host
+     * Añade ninjas al no-host
+     * @throws IOException
+     */
     public void setGame() throws IOException {
         setUperData.decideFirst(host, noHost);
 
@@ -46,9 +52,15 @@ public class GameManagerV2 {
         waitForTurn(host);
         setUperData.addNinjas(noHost, serverManager);
 
-        // Funcion que se encargue de llamado para pedir datos al host
+        waitForTurn(noHost);
+        waitForTurn(host);
+
     }
 
+    /**
+     * Se encarga de ejecutar el juego por turnos siempre y cuando los players tengan ninjas
+     * @throws IOException
+     */
     public void playGame() throws IOException {
         setGame();
 
@@ -71,6 +83,14 @@ public class GameManagerV2 {
 
     }
 
+    /**
+     * Por cada ninja que el jugador actualmente tiene, se ejecuta un accion
+     * se encarga de verificar si la accion fue valida, y si fue asi
+     * hace cambios.
+     * @param allyPlayer Es su turno
+     * @param enemyPlayer Se utiliza en caso de que la accion sea un ataque
+     * @throws IOException
+     */
     private void executeTurn(Player allyPlayer, Player enemyPlayer) throws IOException {
         try {
             dataChecker.checkNinjas(allyPlayer);
@@ -94,17 +114,14 @@ public class GameManagerV2 {
                     if (playerAction.getAction() == ATTACK) {
                         success = actionManager.doAttack(playerAction, enemyPlayer.getPlayerGrid(), element);
 
-                        dataClient.setPosition(position);
-                        dataClient.setTerrainType(TerrainType.Destroyed);
-                        dataClient.setActionType(ATTACK_VALID);
+                        dataClient = createDataClient(position, TerrainType.Destroyed, ATTACK_VALID);
                     }
 
                     if (playerAction.getAction() == MOVE) {
                         success = actionManager.validateMovement(allyPlayer.getPlayerGrid(), playerAction, element);
-                        dataClient.setNinja(element);
-                        dataClient.setTerrainType(allyPlayer.getPlayerGrid().getTile(playerAction.getRow(), playerAction.getColumn()).getTerrain());
-                        dataClient.setPosition(position);
-                        dataClient.setActionType(MOVE_VALID);
+
+                        dataClient = createDataClient(position, allyPlayer.getPlayerGrid().getTile(playerAction.getRow(), playerAction.getColumn()).getTerrain(),
+                                MOVE_VALID, element);
                     }
 
                     if (!success) {
@@ -120,6 +137,9 @@ public class GameManagerV2 {
                         serverManager.modifyValues(allyPlayer, dataClient);
 
                         if(dataClient.getActionType() == ATTACK_VALID) {
+                            if (attackedNinja()) {
+                                serverManager.sendString(allyPlayer, "Le pegaste a un ninja en la posicion: " + (position.getRow() + 1) + " " + (position.getColumn() + 1));
+                            }
                             dataClient.setActionType(ATTACK_ENEMY_GRID_VALID);
                             serverManager.modifyValues(enemyPlayer, dataClient);
                         }
@@ -145,5 +165,36 @@ public class GameManagerV2 {
         DataClient dataClient = new DataClient();
         dataClient.setActionType(WAIT);
         serverManager.modifyValues(player, dataClient);
+    }
+
+    private DataClient createDataClient(Position position, TerrainType terrainType, int actionType) {
+        DataClient dataClient = new DataClient();
+
+        dataClient.setPosition(position);
+        dataClient.setTerrainType(terrainType);
+        dataClient.setActionType(actionType);
+
+        return dataClient;
+    }
+
+    private DataClient createDataClient(Position position, TerrainType terrainType, int actionType, Ninja ninja) {
+        DataClient dataClient = new DataClient();
+
+        dataClient.setPosition(position);
+        dataClient.setTerrainType(terrainType);
+        dataClient.setActionType(actionType);
+        dataClient.setNinja(ninja);
+
+        return dataClient;
+    }
+
+    private boolean attackedNinja() {
+        boolean success = false;
+
+        if (actionManager.getActionValidator().getAttackValidator().isAttackedNinja()){
+            success = true;
+        }
+
+        return success;
     }
 }

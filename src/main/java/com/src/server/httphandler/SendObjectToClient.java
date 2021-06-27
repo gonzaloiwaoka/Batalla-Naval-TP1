@@ -1,6 +1,7 @@
 package com.src.server.httphandler;
 
 import com.src.ConsoleCleaner.ClearConsole;
+import com.src.InformationObtainer.InformationProcessor;
 import com.src.entity.DataClient;
 import com.src.manager.ClientManager;
 import com.src.server.gson.Mapper;
@@ -22,7 +23,6 @@ public class SendObjectToClient implements HttpHandler {
     @Override
     public void handle(HttpExchange exchange) throws IOException {
         try {
-            ClearConsole.clearScreen();
             DataClient dataClient = Mapper.fromJson(exchange.getRequestBody(), DataClient.class);
 
             switch (dataClient.getActionType()) {
@@ -40,11 +40,14 @@ public class SendObjectToClient implements HttpHandler {
                     break;
             }
             if (dataClient.getActionType() != 3) {
+                ClearConsole.clearScreen();
                 clientManager.ShowGrid();
             }
 
             if (dataClient.getActionType() == 100) {
                 ClearConsole.clearScreen();
+                clientManager.ShowGrid();
+                InformationProcessor.showStringAndLine("");
                 System.out.println("Espera mientras el otro juega.");
             }
 

@@ -15,6 +15,11 @@ public class ConnectionServer {
     private static int action;
     private static String ipPort;
 
+    /**
+     * Crea un game, donde el host decide si quiere invitar a alguien o esperar a que
+     * alguien se le una
+     * @return Devuelve un ipPort, que es correspondiente al no host.
+     */
     public static String hostDecideWhatToDo(ServerManager serverManager, Player noHost) throws IOException, InterruptedException {
         String newIpPort = null;
         InformationProcessor.showStringAndLine("Quiere invitar a alguien (0) o esperar a que se una (1): ");
@@ -38,6 +43,11 @@ public class ConnectionServer {
         return newIpPort;
     }
 
+    /**
+     * Dependiendo lo que el no-host, puede espara a que lo inviten o que alguien se le una.
+     * @param serverManager
+     * @param noHost
+     */
     public static void noHostDecideWhatToDo(ServerManager serverManager, Player noHost) {
         //no instance
 

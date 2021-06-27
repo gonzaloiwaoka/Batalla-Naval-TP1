@@ -48,7 +48,7 @@ public class GameLoader {
                     case "C":
                         typeUserIp = createGame();
 
-                        if (typeUserIp.getIp() != null) {
+                        if (typeUserIp.getPort() != 00) {
                            typeUserIp.setTypeUser(true);
                             exit = true;
                         }
@@ -57,7 +57,7 @@ public class GameLoader {
                     case "J":
                         typeUserIp = joinGame();
 
-                        if (typeUserIp.getIp() != null) {
+                        if (typeUserIp.getPort() != 0) {
                             typeUserIp.setTypeUser(false);
                             exit = true;
                         }
@@ -81,31 +81,34 @@ public class GameLoader {
     }
 
     private TypeUserIp createGame() throws InterruptedException {
-        screenCreateGame.showMessage();
+        //screenCreateGame.showMessage();
         TypeUserIp typeUserIp = new TypeUserIp();
-
+        /*
         String input = InformationProcessor.getString();
 
         if (input != "S") {
-            typeUserIp.setPort(HOST_PORT);
-            typeUserIp.setIp(input);
-            typeUserIp.setTypeUser(true);
-        }
+
+            //typeUserIp.setIp(input);
+
+        }*/
+        typeUserIp.setPort(HOST_PORT);
 
         return typeUserIp;
     }
 
     public TypeUserIp joinGame() {
-        screenCreateGame.showMessage();
+        //screenCreateGame.showMessage();
         TypeUserIp typeUserIp = new TypeUserIp();
-
+        /*
         String input = InformationProcessor.getString();
 
         if (input != "S") {
-            typeUserIp.setPort(NO_HOST_PORT);
-            typeUserIp.setIp(input);
-            typeUserIp.setTypeUser(true);
-        }
+
+            //typeUserIp.setIp(input);
+
+        }*/
+
+        typeUserIp.setPort(NO_HOST_PORT);
 
         return typeUserIp;
     }

@@ -13,12 +13,12 @@ import javax.swing.*;
 import java.io.IOException;
 import java.util.List;
 
-public class ActionManagerV2 {
+public class ActionManager {
 
     private ErrorFunctions errorFunctions;
     private ActionValidator actionValidator;
 
-    public ActionManagerV2(ErrorFunctions errorFunctions, ActionValidator actionValidator) {
+    public ActionManager(ErrorFunctions errorFunctions, ActionValidator actionValidator) {
         this.errorFunctions = errorFunctions;
         this.actionValidator = actionValidator;
     }

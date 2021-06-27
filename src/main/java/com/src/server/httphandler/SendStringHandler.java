@@ -15,9 +15,8 @@ public class SendStringHandler implements HttpHandler {
         try {
             String message = Mapper.fromJson(exchange.getRequestBody(), String.class);
             InformationProcessor.showStringAndLine(message);
-            Thread.sleep(2000);
-            exchange.sendResponseHeaders(200,0);
 
+            exchange.sendResponseHeaders(200,0);
             OutputStream os = exchange.getResponseBody();
             os.write(0);
 

@@ -1,5 +1,6 @@
 package com.src.manager;
 
+import com.src.InformationObtainer.InformationProcessor;
 import com.src.entity.*;
 import com.src.enumarate.TerrainType;
 import com.src.factory.PlayerFactory;
@@ -58,8 +59,10 @@ public class ClientManager {
     }
 
     public void ShowGrid() {
+        InformationProcessor.showStringAndLine("Grid jugador");
         gridShower.showGrid(player.getPlayerGrid());
         System.out.println("----------");
+        InformationProcessor.showStringAndLine("Grid ataques");
         gridShower.showGrid(player.getAttackGrid());
     }
 

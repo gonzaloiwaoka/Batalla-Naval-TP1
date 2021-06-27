@@ -16,10 +16,14 @@ public class CreateServer {
 
     public static String createServer(TypeUserIp typeUserIp, ClientManager clientManager, Player host, Player noHost) throws IOException {
 
-        String ipPort = "";
+            String ipPort = "";
 
-            InetSocketAddress sockAddr = new InetSocketAddress(typeUserIp.getIp() , typeUserIp.getPort());
-            HttpServer server = HttpServer.create(new InetSocketAddress(typeUserIp.getIp(), typeUserIp.getPort()), 0);
+        System.out.println(InetAddress.getLocalHost().getHostAddress());
+        typeUserIp.setIp(InetAddress.getLocalHost().getHostAddress());
+        InetSocketAddress sockAddr = new InetSocketAddress(InetAddress.getLocalHost().getHostAddress(), typeUserIp.getPort());
+            HttpServer server = HttpServer.create(sockAddr, 0);
+
+
 
             server.createContext("/getAction", new GetActionHandler());
             server.createContext("/getPosition", new GetPositionHandler());
@@ -37,6 +41,5 @@ public class CreateServer {
             return ipPort;
 
     }
-
 
 }
